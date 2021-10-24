@@ -11,12 +11,20 @@ services:
     volumes:
       - .:/usr/share/nginx/html:rw
       - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - mysql
+    networks:
+      - app-network
 
   php-fpm:
     build: .docker/php-fpm
     container_name: ${APP_NAME}_php
     volumes:
       - .:/usr/share/nginx/html:rw
+    depends_on:
+      - mysql
+    networks:
+      - app-network
 
   mysql:
     image: mysql:5.7
@@ -27,3 +35,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
     restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

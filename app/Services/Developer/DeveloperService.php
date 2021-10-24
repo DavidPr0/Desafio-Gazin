@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Servicer\Developer;
+namespace App\Services\Developer;
 
 
+use App\Exceptions\NotFoundDeveloperException;
 use App\Models\Developer;
 
 class DeveloperService
@@ -15,7 +16,7 @@ class DeveloperService
         $this->repository = $repository;
     }
 
-    public function find(array $filters = [])
+    public function all(array $filters = [])
     {
         $query = $this->repository;
         $searchLike = ['name', 'hobby'];
@@ -29,21 +30,32 @@ class DeveloperService
         return $query;
     }
 
+    public function find(int $id): Developer
+    {
+        $developer = $this->repository->find($id);
+
+        throw_unless($developer, NotFoundDeveloperException::class);
+
+        return $developer;
+    }
+
     public function create(array $attributes): Developer
     {
         return $this->repository->create($attributes);
     }
 
-    public function update(array $attributes, int $id): bool
+    public function update(array $attributes, int $id): Developer
     {
-        $developer = $this->repository->findOrFail($id);
+        $developer = $this->find($id);
 
-        return $developer->update($attributes);
+        $developer->update($attributes);
+
+        return $developer->fresh();
     }
 
     public function delete(int $id): bool
     {
-        $developer = $this->repository->findOrFail($id);
+        $developer = $this->find($id);
 
         return $developer->delete();
     }
