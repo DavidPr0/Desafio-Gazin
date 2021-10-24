@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDevelopersRequest extends FormRequest
+class DevelopersRequest extends BaseFormRequest
 {
 
     public function authorize()
@@ -19,6 +19,7 @@ class StoreDevelopersRequest extends FormRequest
             'name' => 'required|string',
             'sex' => 'required|string',
             'age' => 'required|integer',
+            'hobby' => 'required|string|max:150',
             'birthDate' => 'required|date_format:Y-m-d'
         ];
 
@@ -29,8 +30,10 @@ class StoreDevelopersRequest extends FormRequest
 
         return [
             'name.required' => 'O nome é obrigatório.',
-            'sex.required' => 'O campo sexo é obrigatório',
+            'sex.required' => 'O sexo é obrigatório',
             'age.required' => 'A idade é obrigatória.',
+            'hobby.required' => 'O HOBBY é obrigatório.',
+            'hobby.max' => 'O HOBBY precisa ter no máximo 150 caracters.',
             'birthDate.required' => 'Data de nascimento é obrigatória',
             'birthDate.date_format' => 'A data de nascimento está em formato incorreto'
         ];
@@ -39,7 +42,6 @@ class StoreDevelopersRequest extends FormRequest
 
     public function response(array $errors)
     {
-        // return response($errors);
         return response()->json($errors, 422);
     }
 }

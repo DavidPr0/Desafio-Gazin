@@ -9,8 +9,6 @@ class Developer extends Model
 {
     use HasFactory;
 
-    protected $table = 'developers';
-
     protected $fillable = [
         'name',
         'sex',
