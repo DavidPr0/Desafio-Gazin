@@ -4,14 +4,14 @@
 
 ## Rodar projeto
 
-   1 -> Após baixar o projeto do repositório duplique o arquivo .env.example e renomeie a cópia para .env e adicione as configurações do banco que forem informada no arquivo docker-composer.
-   2 -> Execute o comando ```bash
+   - Após baixar o projeto do repositório duplique o arquivo .env.example e renomeie a cópia para .env e adicione as configurações do banco que forem informada no arquivo docker-composer.
+   - Execute o comando ```bash
     composer install
     ``` para baixar todas bibliotecas.
-   2 -> executar o comando ```bash
+   - executar o comando ```bash
     docker-compose up -d 
     ``` para subir os containers do docker, finalizando sua aplicação estará em execução.
-   3 -> Para realizar os testes será necessário acessar o bash do docker, utilizando o comando ```bash
+   - Para realizar os testes será necessário acessar o bash do docker, utilizando o comando ```bash
     docker exec -it nome_do_container bash
     ```, após acessar rodar o comando ```
     bash vendor/bin/phpunit
